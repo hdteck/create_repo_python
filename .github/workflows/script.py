@@ -14,7 +14,7 @@ access_token = os.getenv('GITHUB_ACCESSTOKEN')
 #path es proyecto_producto
 reponame = "data['proyecto']"+"_"+"data['producto']"
 def create_project():
-   token = os.getenv('GITHUB_ACCESSTOKEN')
+   token = "${{ secrets.MY_GITHUB_TOKEN }}"
    GITHUB_API_URL = "https://api.github.com/"
    headers = {"Authorization": "token {}".format(token)}
    data = {"name": "{}".format(reponame)}
