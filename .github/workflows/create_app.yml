@@ -47,7 +47,9 @@ jobs:
           pip install pygithub
       - name: execute py script # run file
         run: |
-          python3 ./.github/workflows/script.py 
+          python3 ./.github/workflows/script.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}   
       #- uses: jannekem/run-python-script-action@v1
         #with:
           #script: |
