@@ -18,7 +18,7 @@ def create_project():
    GITHUB_API_URL = "https://api.github.com/"
    headers = {"Authorization": "token {}".format(token)}
    data = {"name": "{}".format(reponame)}
-   r = requests.post(GITHUB_API_URL +"orgs/geci-trial-ghe/repos" + "", data=json.dumps(data), headers=headers)
+   r = requests.post(GITHUB_API_URL +"hdteck/repos" + "", data=json.dumps(data), headers=headers)
    print(r)
 def create_branch():
     for rama in {','.join(data['entornos_deploy'])}:
