@@ -1,0 +1,25 @@
+aplicacion: BBB-000
+producto: PD00000001
+proyecto: PR00000001
+tecnologias:
+  - java
+  - nodeJS
+  - python
+entornos_deploy:
+  - desarrrollo
+  - uat
+  - ntf
+  - produccion
+usuarios:
+  - x00000pi
+  - x00001po
+  - x00002pu
+  - x00003tu
+  - x00004ti
+usuarios_aprobadores:
+  - x00002pu
+  - x00003tu
+  - x00004ti
+
+
+

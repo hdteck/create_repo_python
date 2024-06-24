@@ -1,0 +1,112 @@
+name: Create estructura de aplicacion en github desde Template
+
+on:
+  workflow_dispatch:
+    inputs:
+      name_app:
+        description: 'Nombre del archivo .yml'
+        required: true
+env:
+  name_aplication: "${{ github.event.inputs.name_app }}"
+
+jobs:
+  set-env:
+    runs-on: ubuntu-latest
+    # outputs:
+      # aplicacion: ${{ steps.print_env.outputs.aplicacion }}
+      ##producto: ${{ steps.setvariables.outputs.producto }}
+      ##proyecto: ${{ steps.setvariables.outputs.proyecto }}
+      ##tecnologias: ${{ steps.setvariables.outputs.tecnologias }}
+      ##entornos_deploy: ${{ steps.setvariables.outputs.entornos_deploy }}
+      ##usuarios: ${{ steps.setvariables.outputs.usuarios }}
+      ##usuarios_aprobadores: ${{ steps.setvariables.outputs.usuarios_aprobadores }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: read-yaml-file
+        uses: pietrobolcato/action-read-yaml@1.0.0
+        id: read_action_js
+        with:
+          config: ${{ github.workspace }}/${{ github.event.inputs.name_app }}/parameters.yaml
+
+      #- name: use-yaml-file
+      #  id: print_env
+      #  shell: bash
+      #  run: |
+      #    echo "aplicacion: ${{ steps.read_yaml.outputs.[aplicacion] }}"
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+          pip install pygithub
+      - name: execute py script # run file
+        run: |
+          python3 ./.github/workflows/script.py 
+      #- uses: jannekem/run-python-script-action@v1
+        #with:
+          #script: |
+            ##!/usr/bin/env python3
+            #import yaml
+            #import os
+#
+            ## Nombre del archivo YAML proporcionado por el usuario
+            #name_app = "${{ github.event.inputs.name_app }}"
+            #file_path = f"./${{ github.event.inputs.name_app }}/parameters.yml"
+#
+            ## Leer el archivo YAML
+            #with open(file_path, 'r') as file:
+                #data = yaml.safe_load(file)
+#
+            ## Establecer las variables de salida
+            #print(f"aplicacion={data['aplicacion']}") >> $GITHUB_OUTPUT
+            #print(f"producto={data['producto']}") >> $GITHUB_OUTPUT
+            #print(f"proyecto={data['proyecto']}") >> $GITHUB_OUTPUT
+            #print(f"tecnologias={','.join(data['tecnologias'])}") >> $GITHUB_OUTPUT
+            #print(f"entornos_deploy={','.join(data['entornos_deploy'])}") >> $GITHUB_OUTPUT
+            #print(f"usuarios={','.join(data['usuarios'])}") >> $GITHUB_OUTPUT
+            #print(f"usuarios_aprobadores={','.join(data['usuarios_aprobadores'])}") >> $GITHUB_OUTPUT
+      
+  #create-repos:
+    #runs-on: ubuntu-latest
+    #needs: set-env
+    #steps:
+      #- env:
+          #aplicacion: ${{ needs.set-env.outputs.aplicacion }}
+          #producto: ${{ needs.set-env.outputs.producto }}
+          #proyecto: ${{ needs.set-env.outputs.proyecto }}
+          #tecnologias: ${{ needs.set-env.outputs.tecnologias }}
+          #entornos_deploy: ${{ needs.set-env.outputs.entornos_deploy }}
+          #usuarios: ${{ needs.set-env.outputs.usuarios }}
+          #usuarios_aprobadores: ${{ needs.set-env.outputs.usuarios_aprobadores }}
+        #run: |
+          #echo "Aplicacion: ${{ needs.set-env-yaml.outputs.aplicacion }}"
+          #echo "Producto: ${{ needs.set-env.outputs.producto }}"
+          #echo "Proyecto: ${{ needs.set-env.outputs.proyecto }}"
+          #echo "Tecnologias: ${{ needs.set-env.outputs.tecnologias }}"
+          #echo "Entornos de Deploy: ${{ needs.set-env.outputs.entornos_deploy }}"
+          #echo "Usuarios: ${{ needs.set-env.outputs.usuarios }}"
+          #echo "Usuarios Aprobadores: ${{ needs.set-env.outputs.usuarios_aprobadores }}"
+
+  ## use-env:
+    ## needs: set-env
+    ## runs-on: ubuntu-latest
+    ## strategy:
+      ## matrix:
+        ## tecnologia: ${{ fromJson(env.TECNOLOGIAS) }}
+        ## entorno: ${{ fromJson(env.ENTORNOS_DEPLOY) }}
+    ## steps:
+      ## - name: Use environment variables
+        ## run: |
+          ## echo "Aplicación: $APLICACION"
+          ## echo "Producto: $PRODUCTO"
+          ## echo "Proyecto: $PROYECTO"
+          ## echo "Tecnología: ${{ matrix.tecnologia }}"
+          ## echo "Entorno de despliegue: ${{ matrix.entorno }}"
+          ## echo "Usuarios: $USUARIOS"
+          ## echo "Usuarios aprobadores: $USUARIOS_APROBADORES"
