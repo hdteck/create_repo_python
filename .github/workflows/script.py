@@ -22,7 +22,7 @@ def create_project():
 def create_branch():
     for ramas in {','.join(data['entornos_deploy'])}:
         rama = ramas.split(',')
-        print(ramas[0])
+        print(rama[0])
         token = os.environ['GITHUB_TOKEN']
         headers = {"Authorization": "token {}".format(token)}
         url = "https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs/heads"
