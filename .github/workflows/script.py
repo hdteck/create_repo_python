@@ -21,13 +21,14 @@ def create_project():
    print(respuesta.status_code)
 def create_branch():
     for rama in {','.join(data['entornos_deploy'])}:
+        print(rama)
         token = os.environ['GITHUB_TOKEN']
         headers = {"Authorization": "token {}".format(token)}
         url = "https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs/heads"
         branches = requests.get(url, headers=headers).json()
         branch, sha = branches[-1]['ref'], branches[-1]['object']['sha']
         res = requests.post('https://api.github.com/repos/'+'hdteck/reponame'+'/git/refs', json={
-             "ref": "refs/heads/newbranch",
+             "ref": "refs/heads/rama",
              "sha": sha
              }, headers=headers)
         print(res.content)
@@ -35,7 +36,7 @@ def create_branch():
 # Leer el archivo YAML
 with open(file_path, 'r') as file:
     data = yaml.safe_load(file)
-    #path es proyecto_producto
+#reponame es proyecto_producto
 reponame = str({data['proyecto']}) +"_"+ str({data['producto']})
 print(f"aplicacion={data['aplicacion']}")
 print(f"producto={data['producto']}")
