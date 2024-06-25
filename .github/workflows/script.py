@@ -36,7 +36,7 @@ def create_branch():
 with open(file_path, 'r') as file:
     data = yaml.safe_load(file)
     #path es proyecto_producto
-reponame = {data['proyecto']} +"_"+ {data['producto']}
+reponame = str({data['proyecto']}) +"_"+ str({data['producto']})
 print(f"aplicacion={data['aplicacion']}")
 print(f"producto={data['producto']}")
 print(f"proyecto={data['proyecto']}")
