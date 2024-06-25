@@ -24,14 +24,11 @@ def create_branch():
         rama = ramas.split(',')
         print(rama[0])
         token = os.environ['GITHUB_TOKEN']
-        headers = {"Authorization": "token {}".format(token)}
-        url = "https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs/heads"
-        branches = requests.get(url, headers=headers).json()
-        branch, sha = branches[-1]['ref'], branches[-1]['object']['sha']
+        headers = {"Authorization": "token {}".format(token)}        
         url_new_branch = "https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs"
         res = requests.post(url_new_branch, json={
-             "ref": "refs/heads/rama[0]",
-             "sha": sha
+             "ref": "refs/heads/"+rama[0],
+             "sha": "sha"
              }, headers=headers)
         print(res.content)
 
