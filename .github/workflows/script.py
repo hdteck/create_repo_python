@@ -30,7 +30,7 @@ def create_branch():
         url = "https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs/heads"
         branches = requests.get(url, headers=headers).json()
 #        sha = branches[-1]['object']['sha']
-        res = requests.post('https://api.github.com/repos/<USERNAME>/<REPO>/git/refs', json={
+        res = requests.post("https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs", json={
               "ref": "refs/heads/"+rama[rama_number],
               "sha": "aa218f56b14c9653891f9e74264a383fa43fefbd"
                 }, headers=headers)
