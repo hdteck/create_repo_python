@@ -32,7 +32,7 @@ def create_branch():
         sha = branches[-1]['object']['sha']
         res = requests.post('https://api.github.com/repos/<USERNAME>/<REPO>/git/refs', json={
               "ref": "refs/heads/"+rama[rama_number],
-              "sha": sha
+              "sha": "aa218f56b14c9653891f9e74264a383fa43fefbd"
                 }, headers=headers)
         print(res.content)
         rama_number +=1
