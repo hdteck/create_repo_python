@@ -30,7 +30,7 @@ def create_branch():
         url = "https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs/heads"
         branches = requests.get(url, headers=headers).json()
 #        sha = branches[-1]['object']['sha']
-        res = requests.post("https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs", json={
+        res = requests.post("https://api.github.com/repos/"+"hdteck/"+reponame+"/git/refs", json={
               "ref": "refs/heads/"+rama[rama_number],
               "sha": "aa218f56b14c9653891f9e74264a383fa43fefbd"
                 }, headers=headers)
@@ -51,7 +51,15 @@ def create_codeowners_file():
            f.write("*"+"\t"+codeowners[usuario])
            f.close()
            usuario +=1
-
+def create_ficheros_por_tecnologia():
+    for tecnologias in {','.join(data['tecnologias'])}:
+        tec = tecnologias.split(',')
+        if tec == 'nodeJS':
+            print("añadimos los ficheros necesarios para la tecnologia "+tec)
+        elif tec == 'java':
+            print("añadimos los ficheros necesarios para la tecnologia "+tec)
+        elif tec == 'python':    
+            print("añadimos los ficheros necesarios para la tecnologia "+tec)
 # Leer el archivo YAML
 with open(file_path, 'r') as file:
     data = yaml.safe_load(file)
@@ -65,7 +73,8 @@ reponame = str({data['proyecto']}) +"_"+ str({data['producto']})
 #print(f"usuarios={','.join(data['usuarios'])}")
 #print(f"usuarios_aprobadores={','.join(data['usuarios_aprobadores'])}")
 
-#revisar el error 401 que aparece en la salida
+
 create_project()
 create_branch()
 create_codeowners_file()
+create_ficheros_por_tecnologia()
