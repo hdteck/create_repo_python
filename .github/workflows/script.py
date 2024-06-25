@@ -6,6 +6,7 @@ import requests
 import json
 from github import Github
 from github import Auth
+from pathlib import Path
 # Nombre del archivo YAML proporcionado por el usuario
 name_app = "${{ github.event.inputs.name_app }}"
 file_path = f"./BBB-000/parameters.yml"
@@ -22,28 +23,45 @@ def create_project():
 def create_branch():
     for ramas in {','.join(data['entornos_deploy'])}:
         rama = ramas.split(',')
-        print(rama[0])
+        rama_number = 0
+        print(rama[rama_number])
         token = os.environ['GITHUB_TOKEN']
         headers = {"Authorization": "token {}".format(token)}        
         url_new_branch = "https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs"
         res = requests.post(url_new_branch, json={
-             "ref": "refs/heads/"+rama[0],
+             "ref": "refs/heads/"+rama[rama_number],
              "sha": "sha"
              }, headers=headers)
         print(res.content)
+        rama_number =+1
+def create_codeowners_file():
+    for users in {','.join(data['usuarios'])}:
+        codeowners = users.split(',')
+        usuario = 0
+        fichero = Path("CODEOWNERS")
+        if fichero.exists():
+           f = open("CODEOWNERS","a")
+           f.write("*"+"\t"+codeowners[usuario])
+           f.close()
+           usuario =+1        
+        else:
+           f = open("CODEOWNERS", "x")
+           f.write("*"+"\t"+codeowners[usuario])
+           f.close()
+           usuario =+1
 
 # Leer el archivo YAML
 with open(file_path, 'r') as file:
     data = yaml.safe_load(file)
 # es proyecto_producto
 reponame = str({data['proyecto']}) +"_"+ str({data['producto']})
-print(f"aplicacion={data['aplicacion']}")
-print(f"producto={data['producto']}")
-print(f"proyecto={data['proyecto']}")
-print(f"tecnologias={','.join(data['tecnologias'])}")
-print(f"entornos_deploy={','.join(data['entornos_deploy'])}")
-print(f"usuarios={','.join(data['usuarios'])}")
-print(f"usuarios_aprobadores={','.join(data['usuarios_aprobadores'])}")
+#print(f"aplicacion={data['aplicacion']}")
+#print(f"producto={data['producto']}")
+#print(f"proyecto={data['proyecto']}")
+#print(f"tecnologias={','.join(data['tecnologias'])}")
+#print(f"entornos_deploy={','.join(data['entornos_deploy'])}")
+#print(f"usuarios={','.join(data['usuarios'])}")
+#print(f"usuarios_aprobadores={','.join(data['usuarios_aprobadores'])}")
 
 #revisar el error 401 que aparece en la salida
 create_project()
