@@ -11,24 +11,31 @@ name_app = "${{ github.event.inputs.name_app }}"
 file_path = f"./BBB-000/parameters.yml"
 #sacamos el token del fichero .env
 access_token = os.getenv('GITHUB_ACCESSTOKEN')
-#path es proyecto_producto
-reponame = "data['proyecto']"+"_"+"data['producto']"
+
 def create_project():
    token = os.environ['GITHUB_TOKEN']
    GITHUB_API_URL = "https://api.github.com/"
    headers = {"Authorization": "token {}".format(token)}
    data = {"name": "{}".format(reponame)}
-   r = requests.post(GITHUB_API_URL +"user/repos" + "", data=json.dumps(data), headers=headers)
-   print(r)
+   respuesta = requests.post(GITHUB_API_URL +"user/repos" + "", data=json.dumps(data), headers=headers)
+   print("HTTP "+ respuesta)
 def create_branch():
     for rama in {','.join(data['entornos_deploy'])}:
-        user = Github(access_token).get_user()
-        new_rama = user.get_branch(rama)
-        user.create_git_ref(ref='refs/heads/' + rama, sha=new_rama.commit.sha)
+        headers = {"Authorization": "token {}".format(token)}
+        url = "https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs/heads"
+        branches = requests.get(url, headers=headers).json()
+        branch, sha = branches[-1]['ref'], branches[-1]['object']['sha']
+        res = requests.post('https://api.github.com/repos/'+'hdteck/reponame'+'/git/refs', json={
+             "ref": "refs/heads/newbranch",
+             "sha": sha
+             }, headers=headers)
+        print(res.content)
 
 # Leer el archivo YAML
 with open(file_path, 'r') as file:
     data = yaml.safe_load(file)
+    #path es proyecto_producto
+reponame = "data['proyecto']"+"_"+"data['producto']"
 print(f"aplicacion={data['aplicacion']}")
 print(f"producto={data['producto']}")
 print(f"proyecto={data['proyecto']}")
@@ -39,4 +46,4 @@ print(f"usuarios_aprobadores={','.join(data['usuarios_aprobadores'])}")
 
 #revisar el error 401 que aparece en la salida
 create_project()
-#create_branch()
+create_branch()
