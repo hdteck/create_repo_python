@@ -51,6 +51,8 @@ def create_codeowners_file():
            f.write("*"+"\t"+codeowners[usuario])
            f.close()
            usuario +=1
+    f = open("CODEOWNERS", "r")
+    print(f.read())      
 def create_ficheros_por_tecnologia():
     for tecnologias in {','.join(data['tecnologias'])}:
         tec = tecnologias.split(',')
@@ -64,7 +66,7 @@ def create_ficheros_por_tecnologia():
 with open(file_path, 'r') as file:
     data = yaml.safe_load(file)
 # es proyecto_producto
-reponame = str({data['proyecto']}) +"_"+ str({data['producto']})
+reponame = str({data['aplicacion']}) +"_"+ str({data['producto']})
 #print(f"aplicacion={data['aplicacion']}")
 #print(f"producto={data['producto']}")
 #print(f"proyecto={data['proyecto']}")
