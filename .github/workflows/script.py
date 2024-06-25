@@ -27,11 +27,13 @@ def create_branch():
         print(rama[rama_number])
         token = os.environ['GITHUB_TOKEN']
         headers = {"Authorization": "token {}".format(token)}        
-        url_new_branch = "https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs"
-        res = requests.post(url_new_branch, json={
-             "ref": "refs/heads/"+rama[rama_number],
-             "sha": "sha"
-             }, headers=headers)
+        url = "https://api.github.com/repos/"+"hdteck/reponame"+"/git/refs/heads"
+        branches = requests.get(url, headers=headers).json()
+        branch, sha = branches[-1]['ref'], branches[-1]['object']['sha']
+        res = requests.post('https://api.github.com/repos/<USERNAME>/<REPO>/git/refs', json={
+              "ref": "refs/heads/"+rama[rama_number],
+              "sha": sha
+                }, headers=headers)
         print(res.content)
         rama_number +=1
 def create_codeowners_file():
