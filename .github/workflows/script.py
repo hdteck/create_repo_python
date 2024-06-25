@@ -18,8 +18,9 @@ def create_project():
    GITHUB_API_URL = "https://api.github.com/"
    headers = {"Authorization": "token {}".format(token)}
    data = {"name": "{}".format(reponame)}
-   respuesta = requests.post(GITHUB_API_URL +"user/repos" + "", data=json.dumps(data), headers=headers)
+   respuesta = requests.post(GITHUB_API_URL +"/reposeci-repository-templates/lib-scaffolding/generate" + "", data=json.dumps(data), headers=headers)
    print(respuesta.status_code)
+
 def create_branch():
     for ramas in {','.join(data['entornos_deploy'])}:
         rama = ramas.split(',')
@@ -35,33 +36,9 @@ def create_branch():
               "sha": "aa218f56b14c9653891f9e74264a383fa43fefbd"
                 }, headers=headers)
         print(res.content)
-        rama_number +=1
-def create_codeowners_file():
-    for users in {','.join(data['usuarios'])}:
-        codeowners = users.split(',')
-        usuario = 0
-        fichero = Path("CODEOWNERS")
-        if fichero.exists():
-           f = open("CODEOWNERS","a")
-           f.write("*"+"\t"+codeowners[usuario])
-           f.close()
-           usuario +=1        
-        else:
-           f = open("CODEOWNERS", "x")
-           f.write("*"+"\t"+codeowners[usuario])
-           f.close()
-           usuario +=1
-    f = open("CODEOWNERS", "r")
-    print(f.read())      
-def create_ficheros_por_tecnologia():
-    for tecnologias in {','.join(data['tecnologias'])}:
-        tec = tecnologias.split(',')
-        if tec == 'nodeJS':
-            print("añadimos los ficheros necesarios para la tecnologia "+tec)
-        elif tec == 'java':
-            print("añadimos los ficheros necesarios para la tecnologia "+tec)
-        elif tec == 'python':    
-            print("añadimos los ficheros necesarios para la tecnologia "+tec)
+        rama_number =rama_number+1
+
+ 
 # Leer el archivo YAML
 with open(file_path, 'r') as file:
     data = yaml.safe_load(file)
@@ -77,6 +54,4 @@ reponame = str({data['aplicacion']}) +"_"+ str({data['producto']})
 
 
 create_project()
-#create_branch()
-create_codeowners_file()
-create_ficheros_por_tecnologia()
+create_branch()
