@@ -18,7 +18,7 @@ def create_project():
    headers = {"Authorization": "token {}".format(token)}
    data = {"name": "{}".format(reponame)}
    respuesta = requests.post(GITHUB_API_URL +"user/repos" + "", data=json.dumps(data), headers=headers)
-   print("HTTP "+ respuesta)
+   print(respuesta.status_code)
 def create_branch():
     for rama in {','.join(data['entornos_deploy'])}:
         headers = {"Authorization": "token {}".format(token)}
