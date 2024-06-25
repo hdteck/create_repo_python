@@ -33,7 +33,7 @@ def create_branch():
              "sha": "sha"
              }, headers=headers)
         print(res.content)
-        rama_number =+1
+        rama_number +=1
 def create_codeowners_file():
     for users in {','.join(data['usuarios'])}:
         codeowners = users.split(',')
@@ -43,12 +43,12 @@ def create_codeowners_file():
            f = open("CODEOWNERS","a")
            f.write("*"+"\t"+codeowners[usuario])
            f.close()
-           usuario =+1        
+           usuario +=1        
         else:
            f = open("CODEOWNERS", "x")
            f.write("*"+"\t"+codeowners[usuario])
            f.close()
-           usuario =+1
+           usuario +=1
 
 # Leer el archivo YAML
 with open(file_path, 'r') as file:
